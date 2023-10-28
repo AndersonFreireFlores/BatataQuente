@@ -1,74 +1,70 @@
 package Entities;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 public class Fila {
-    private int tamanho;
+    private int tamanhoMaximo;
+    private String[] fila ;
     private int frente;
     private int traseira;
+    private int tamanhoAtual;
 
-    private int batataTimer;
-
-
-    public Fila(int tamanho, int batataTimer) {
-        this.tamanho = tamanho;
-        this.frente = 1;
+    public Fila(int tamanhoMaximo) {
+        this.tamanhoMaximo = tamanhoMaximo;
+        this.fila = new String[tamanhoMaximo];
+        this.frente = 0;
         this.traseira = -1;
-        this.batataTimer = batataTimer;
-
+        this.tamanhoAtual = 0;
     }
 
-    ArrayList<String> fila = new ArrayList<>(this.tamanho);
-
     public boolean estaVazia() {
-        return frente == -1 && traseira == -1;
+        return tamanhoAtual == 0;
     }
 
     public boolean estaCheia() {
-        return (traseira + 1) % tamanho == frente;
+        return tamanhoAtual == tamanhoMaximo;
     }
 
     public void enfileirar(String elemento) {
-        traseira = (traseira + 1) % tamanho;
-        fila.add(elemento);
-        System.out.println(elemento + " foi adicionado");
-    }
-
-    public void desenfileirar() {
-        if (estaVazia()) {
-            System.out.println("A fila está vazia. Não é possível desenfileirar elementos.");
-        } else if (frente == traseira) {
-            System.out.println("Vencedor = " + fila.get(frente));
-            frente = -1;
-            traseira = -1;
+        if (estaCheia()) {
+            System.out.println("Fila está cheia. Não é possível enfileirar mais elementos.");
         } else {
-            System.out.println("Eliminado = " + fila.get(frente));
-            frente = (frente + 1) % tamanho;
+            traseira = (traseira + 1) % tamanhoMaximo;
+            fila[traseira] = elemento;
+            tamanhoAtual++;
         }
     }
 
-    public void mostrarFila() {
+    public String desenfileirar() {
         if (estaVazia()) {
-            System.out.println("A fila está vazia.");
+            System.out.println("Fila está vazia. Não é possível desenfileirar elementos.");
+            return null; // Valor de retorno inválido se a fila estiver vazia
         } else {
-            System.out.println("Elementos na fila: ");
-            for (int i = frente; i != traseira; i = (i + 1) % tamanho) {
-                System.out.print(fila.get(i) + " ");
-            }
-            System.out.println(fila.get(traseira));
+
+            String elementoDesenfileirado = fila[frente];
+            frente = (frente + 1) % tamanhoMaximo;
+            tamanhoAtual--;
+            return elementoDesenfileirado;
         }
     }
-
-    public void jogo() {
-        while (!estaVazia()) {
-            for (int i = 0; i < batataTimer; i++) {
-                System.out.println(fila.get(i) + " esta com a batata!!!");
+    public void jogo (int batataTimer){
+        //for para repetição do jogo
+        for (int i = 0; i < tamanhoMaximo; i++) {
+            //for do print de quem esta com a batata
+            for (int j = 0; j < batataTimer; j++) {
+                System.out.println(Arrays.toString(fila));
+                System.out.println(frente + " esta com a batata!");
             }
-            desenfileirar();
-            if (!estaVazia()) {
-                mostrarFila();
+            //eliminação|vitoria
+            if (tamanhoAtual > 1) {
+                String eliminado = desenfileirar();
+                System.out.println(eliminado + " esta eliminado!");
+            }
+            else {
+                String eliminado = desenfileirar();
+                System.out.println(eliminado + " é o vencedor!");
             }
         }
     }
 }
+
