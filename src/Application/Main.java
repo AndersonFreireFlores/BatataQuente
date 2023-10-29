@@ -1,7 +1,10 @@
 package Application;
 
 import Entities.Fila;
+import ParteGrafica.MyFrame;
+import ParteGrafica.MyLabel;
 
+import javax.swing.*;
 import java.util.Scanner;
 
 public class Main {
@@ -13,12 +16,17 @@ public class Main {
         int tamanho = Integer.parseInt(sc.nextLine());
         System.out.println("Insira o num de passadas até a batata explodir: ");
         int batataTimer = Integer.parseInt(sc.nextLine());
-        Fila fila = new Fila(tamanho);
+        Fila fila = new Fila();
+
         for (int i = 0; i < tamanho; i++) {
             System.out.println("Digite um nome para ser adicionado: ");
-            fila.enfileirar(sc.nextLine());
+            String nome = sc.nextLine();
+            fila.adicionarJogador(nome);
+
         }
-        fila.jogo(batataTimer);
+
+        String vencedor = fila.jogo(batataTimer);
+        System.out.println("O vencedor é: " + vencedor);
 
     }
 }
