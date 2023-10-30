@@ -1,8 +1,6 @@
 package Application;
 
 import Entities.Fila;
-import ParteGrafica.MyFrame;
-import ParteGrafica.MyLabel;
 
 import javax.swing.*;
 import java.util.Scanner;
@@ -18,13 +16,13 @@ public class Main {
         int batataTimer = Integer.parseInt(sc.nextLine());
         Fila fila = new Fila();
 
+        //for para inserção de pessoas
         for (int i = 0; i < tamanho; i++) {
             System.out.println("Digite um nome para ser adicionado: ");
             String nome = sc.nextLine();
             fila.adicionarJogador(nome);
-
         }
-
+        //metodo do jogo e print do resultado
         String vencedor = fila.jogo(batataTimer);
         System.out.println("O vencedor é: " + vencedor);
 
