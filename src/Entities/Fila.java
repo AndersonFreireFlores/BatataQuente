@@ -10,10 +10,21 @@ public class Fila {
         jogadores.add(jogador);
     }
 
+
+    //metodo para ver se esta vazio
+    public boolean isEmpty(ArrayList<String> lista){
+        if (lista.size() == 0){
+            return true;
+        }else {
+            return false;
+        }
+
+    }
+
     //metodo responsavel pela circularidade
     public String moverJogador() {
         String jogador = jogadores.remove(0);
-        if (jogadores.isEmpty()){
+        if (isEmpty(jogadores)){
             jogadores.add(0,jogador);
         }else {
             jogadores.add(jogadores.size(),jogador);
@@ -25,7 +36,7 @@ public class Fila {
     public String jogo(int batataTimer) {
        int contador = 0;
        //repete até ter so uma pessoa na fila, o vencedor
-       while (contador < jogadores.size()*5) {
+       while (contador < jogadores.size()*10) {
            //print de quem esta com a batata
            for (int i = 0; i < batataTimer - 1; i++) {
                String jogadorAtual = moverJogador();
